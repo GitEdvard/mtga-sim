@@ -11,8 +11,7 @@ class Action(abc.ABC):
         self.creature = creature
 
     @abc.abstractmethod
-    @property
-    def action(self):
+    def is_legal(self):
         pass
 
     @property
@@ -28,12 +27,21 @@ class Attack(Action):
     def action(self):
         return ACTION_ATTACK
 
+    def is_legal(self):
+        return True
+
 
 class Pass(Action):
     def action(self):
         return ACTION_PASS
 
+    def is_legal(self):
+        return True
+
 
 class Defend(Action):
     def action(self):
         return ACTION_DEFEND
+
+    def is_legal(self):
+        return False
