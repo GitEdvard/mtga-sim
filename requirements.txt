@@ -1,10 +1,11 @@
 attrs==20.3.0
 certifi==2020.12.5
 chardet==4.0.0
+click==7.1.2
 idna==2.10
 importlib-metadata==4.0.1
 iniconfig==1.1.1
--e git+git@github.com:GitEdvard/mtga-sim.git@40e58967bda611aae032b1afc6ee2c25f23ee845#egg=mtga_sim
+-e git+git@github.com:GitEdvard/mtga-sim.git@91c31c573d2d77b54c961ef53e4e38792d30e3a9#egg=mtga_sim
 packaging==20.9
 pkg-resources==0.0.0
 pluggy==0.13.1

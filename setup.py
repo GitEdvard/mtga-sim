@@ -10,7 +10,7 @@ setup(
     packages=find_packages(exclude=["tests*"]),
     entry_points={
         'console_scripts': [
-            'snpseq-data = snpseq_data.cli:start'
+            'mtga-sim = mtga_sim.cli:start'
         ]
     }
 )
