@@ -54,7 +54,7 @@ class Troup(object):
         self.cards.append(card)
 
     def __str__(self):
-        return " ".join(self.cards)
+        return " ".join([str(c) for c in self.cards])
 
 
 def start(cards_a, cards_b):
