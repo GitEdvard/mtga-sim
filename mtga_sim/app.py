@@ -1,3 +1,6 @@
+from mtga_sim.troop import Creature, Troop
+
+
 class App(object):
     def __init__(self):
         pass
@@ -10,8 +13,8 @@ class App(object):
         self.loop_strategies(cards_a, cards_b)
 
     def loop_strategies(self, cards_a, cards_b):
-        troup = self.parse(cards_a)
-        print(troup)
+        troop = self.parse(cards_a)
+        print(troop)
 
     def validate(self, cards):
         cards_lst = cards.split(';')
@@ -26,35 +29,15 @@ class App(object):
     def parse(self, cards_str):
         """
         :param cards_str: like "2/4;2/3"
-        :return: A Troup
+        :return: A Troop
         """
         lst = cards_str.split(';')
-        ret = Troup()
+        troop = Troop()
         for c in lst:
             card_lst = list(map(lambda x: int(x), c.split('/')))
-            card = Card(power=card_lst[0], toughness=card_lst[1])
-            ret.append(card)
-        return ret
-
-
-class Card(object):
-    def __init__(self, power, toughness):
-        self.power = power
-        self.toughness = toughness
-
-    def __str__(self):
-        return "{}/{}".format(self.power, self.toughness)
-
-
-class Troup(object):
-    def __init__(self):
-        self.cards = list()
-
-    def append(self, card):
-        self.cards.append(card)
-
-    def __str__(self):
-        return " ".join([str(c) for c in self.cards])
+            card = Creature(power=card_lst[0], toughness=card_lst[1])
+            troop.append(card)
+        return troop
 
 
 def start(cards_a, cards_b):
