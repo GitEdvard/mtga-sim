@@ -1,4 +1,5 @@
 import click
+from mtga_sim.app import start as start_sim
 
 
 @click.command("mtga-sim")
@@ -9,5 +10,4 @@ def start(cards_a, cards_b):
     cards_a: Player A cards on battlefield, in the form "2/3;2/2"
     cards_b: Player B cards on battlefield, in the form "4/3"
     """
-    print('player B: {}'.format(cards_b))
-    print('player A: {}'.format(cards_a))
+    start_sim(cards_a, cards_b)
