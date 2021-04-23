@@ -9,12 +9,14 @@ class StrategyCounter(object):
         self.troop = troop
         self.permutation_array = None
         self.troop_pointer = None
+        self.first = None
 
     @property
     def permutation_start_array(self):
         return [0] * len(self.troop)
 
     def __iter__(self):
+        self.first = True
         self.permutation_array = self.permutation_start_array
         self.troop_pointer = len(self.permutation_array) - 1
         return self
@@ -23,26 +25,37 @@ class StrategyCounter(object):
         return len([p for p in self])
 
     def __next__(self):
-        if self.permutation_array[self.troop_pointer] >= 3:
-            self.troop_pointer -= 1
-        if self.troop_pointer < 0:
-            raise StopIteration
-        self.increment_rec()
+        if self.first is True:
+            self.first = False
+        else:
+            self.increment()
         return self.convert()
 
-    def increment_rec(self):
-        self.permutation_array[self.troop_pointer] += 1
-        next_trial_action_number = self.permutation_array[self.troop_pointer]
+    def increment(self):
+        troop_pointer = len(self.permutation_array) - 1
+        self.increment_rec(troop_pointer)
+
+    def increment_rec(self, troop_pointer):
+        # Increment lowest rank that are less than max
+        if troop_pointer < 0:
+            raise StopIteration
+        next_trial_action_number = self.permutation_array[troop_pointer] + 1
+        self.permutation_array[troop_pointer] = next_trial_action_number
         action = None
         if next_trial_action_number < 3:
             action = self.get_action(next_trial_action_number)
+        else:
+            # Current rank is at max number, go to next rank and reset current
+            self.permutation_array[troop_pointer] = 0
+            self.increment_rec(troop_pointer - 1)
         if action is not None and not action.is_legal():
-            self.increment_rec()
+            # Continue count at current rank
+            self.increment_rec(troop_pointer)
 
     def convert(self):
         action_arr = list()
         for idx, p in enumerate(self.permutation_array):
-            action = self.get_action(idx)
+            action = self.get_action(p)
             action_arr.append(action)
 
         return action_arr
