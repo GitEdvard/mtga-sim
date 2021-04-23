@@ -1,4 +1,4 @@
-from mtga_sim.action import Action
+from mtga_sim.actions.action import Action
 
 
 class DefendAction(Action):

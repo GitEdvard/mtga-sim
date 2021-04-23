@@ -1,4 +1,4 @@
-from mtga_sim.attack_actions import AttackAction
+from mtga_sim.actions.attack_actions import AttackAction
 
 
 class TestActions(object):

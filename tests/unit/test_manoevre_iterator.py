@@ -1,7 +1,7 @@
 import pytest
 from mtga_sim.troop import Troop, Creature
 from mtga_sim.manoeuvre_iterator import AttackManoeuvreIterator as ManoeuvreIterator
-from mtga_sim.attack_actions import Attack, Pass
+from mtga_sim.actions.attack_actions import Attack, Pass
 
 
 class TestManoeuvreIterator(object):
