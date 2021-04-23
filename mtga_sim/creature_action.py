@@ -12,10 +12,6 @@ class Action(abc.ABC):
     def __init__(self, creature):
         self.creature = creature
 
-    @abc.abstractmethod
-    def is_legal(self):
-        pass
-
     @property
     def power(self):
         return self.creature.power
@@ -28,6 +24,10 @@ class Action(abc.ABC):
     def number_actions(cls):
         classes = cls._get_subclasses()
         return len([c for c in classes])
+
+    @property
+    def is_legal(self):
+        return self.legal
 
     @classmethod
     def _get_subclasses(cls):
@@ -51,26 +51,32 @@ class Action(abc.ABC):
 
         return action
 
+    def __repr__(self):
+        return self.__class__.__name__
+
 
 class Attack(Action):
+    def __init__(self, *args):
+        super().__init__(*args)
+        self.legal = True
+
     def action(self):
         return ACTION_ATTACK
 
-    def is_legal(self):
-        return True
-
 
 class Pass(Action):
+    def __init__(self, *args):
+        super().__init__(*args)
+        self.legal = True
+
     def action(self):
         return ACTION_PASS
 
-    def is_legal(self):
-        return True
-
 
 class Defend(Action):
+    def __init__(self, *args):
+        super().__init__(*args)
+        self.legal = False
+
     def action(self):
         return ACTION_DEFEND
-
-    def is_legal(self):
-        return False

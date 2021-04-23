@@ -9,17 +9,19 @@ class ManoeuvreIterator(object):
     def __init__(self, troop):
         self.troop = troop
         self.permutation_array = None
-        self.troop_pointer = None
         self.first = None
 
     @property
     def permutation_start_array(self):
-        return [0] * len(self.troop)
+        start_arr = [0] * len(self.troop)
+        for i in range(len(self.troop)):
+            start_arr[i] = self.first_legal_action_index(i)
+
+        return start_arr
 
     def __iter__(self):
         self.first = True
         self.permutation_array = self.permutation_start_array
-        self.troop_pointer = len(self.permutation_array) - 1
         return self
 
     def __len__(self):
@@ -47,11 +49,20 @@ class ManoeuvreIterator(object):
             action = Action.instantiate(next_trial_action_number, self.troop[troop_pointer])
         else:
             # Current rank is at max number, go to next rank and reset current
-            self.permutation_array[troop_pointer] = 0
+            self.permutation_array[troop_pointer] = \
+                self.first_legal_action_index(troop_pointer)
             self.increment_rec(troop_pointer - 1)
-        if action is not None and not action.is_legal():
+        if action is not None and not action.is_legal:
             # Continue count at current rank
             self.increment_rec(troop_pointer)
+
+    def first_legal_action_index(self, troop_pointer):
+        creature = self.troop[troop_pointer]
+        for i in range(Action.number_actions()):
+            action = Action.instantiate(i, creature)
+            if action.is_legal:
+                return i
+        return Action.number_actions()
 
     def convert(self):
         action_arr = list()
