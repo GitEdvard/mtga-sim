@@ -3,14 +3,17 @@ import sys
 import inspect
 
 CURRENT_MODULE = sys.modules[__name__]
-ACTION_ATTACK = "attack"
-ACTION_PASS = "pass"
-ACTION_DEFEND = "defend"
 
 
 class Action(abc.ABC):
     def __init__(self, creature):
         self.creature = creature
+        self.legal = False
+
+    @classmethod
+    @abc.abstractmethod
+    def action_index(cls):
+        pass
 
     @property
     def power(self):
@@ -39,44 +42,45 @@ class Action(abc.ABC):
 
         return ret
 
-    @staticmethod
-    def instantiate(action_number, creature):
-        action = None
-        if action_number == 0:
-            action = Defend(creature)
-        if action_number == 1:
-            action = Attack(creature)
-        if action_number == 2:
-            action = Pass(creature)
-
-        return action
-
     def __repr__(self):
         return self.__class__.__name__
 
-
-class Attack(Action):
-    def __init__(self, *args):
-        super().__init__(*args)
-        self.legal = True
-
-    def action(self):
-        return ACTION_ATTACK
+    @classmethod
+    def instantiate(cls, action_number, creature):
+        for clazz in cls._get_subclasses():
+            if clazz.action_index() == action_number:
+                return clazz(creature)
 
 
-class Pass(Action):
-    def __init__(self, *args):
-        super().__init__(*args)
-        self.legal = True
-
-    def action(self):
-        return ACTION_PASS
+class AttackAction(Action):
+    pass
 
 
-class Defend(Action):
+class SomeIllegalAction(AttackAction):
     def __init__(self, *args):
         super().__init__(*args)
         self.legal = False
 
-    def action(self):
-        return ACTION_DEFEND
+    @classmethod
+    def action_index(cls):
+        return 0
+
+
+class Attack(AttackAction):
+    def __init__(self, *args):
+        super().__init__(*args)
+        self.legal = True
+
+    @classmethod
+    def action_index(cls):
+        return 1
+
+
+class Pass(AttackAction):
+    def __init__(self, *args):
+        super().__init__(*args)
+        self.legal = True
+
+    @classmethod
+    def action_index(cls):
+        return 2

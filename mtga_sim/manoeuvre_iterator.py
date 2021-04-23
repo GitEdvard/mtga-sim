@@ -1,5 +1,5 @@
-from mtga_sim.creature_action import Attack, Pass, Defend
-from mtga_sim.creature_action import Action
+from mtga_sim.attack_actions import Attack, Pass, SomeIllegalAction
+from mtga_sim.attack_actions import AttackAction
 
 
 class ManoeuvreIterator(object):
@@ -45,8 +45,8 @@ class ManoeuvreIterator(object):
         next_trial_action_number = self.permutation_array[troop_pointer] + 1
         self.permutation_array[troop_pointer] = next_trial_action_number
         action = None
-        if next_trial_action_number < Action.number_actions():
-            action = Action.instantiate(next_trial_action_number, self.troop[troop_pointer])
+        if next_trial_action_number < AttackAction.number_actions():
+            action = AttackAction.instantiate(next_trial_action_number, self.troop[troop_pointer])
         else:
             # Current rank is at max number, go to next rank and reset current
             self.permutation_array[troop_pointer] = \
@@ -58,16 +58,16 @@ class ManoeuvreIterator(object):
 
     def first_legal_action_index(self, troop_pointer):
         creature = self.troop[troop_pointer]
-        for i in range(Action.number_actions()):
-            action = Action.instantiate(i, creature)
+        for i in range(AttackAction.number_actions()):
+            action = AttackAction.instantiate(i, creature)
             if action.is_legal:
                 return i
-        return Action.number_actions()
+        return AttackAction.number_actions()
 
     def convert(self):
         action_arr = list()
         for idx, p in enumerate(self.permutation_array):
-            action = Action.instantiate(p, self.troop[idx])
+            action = AttackAction.instantiate(p, self.troop[idx])
             action_arr.append(action)
 
         return action_arr
