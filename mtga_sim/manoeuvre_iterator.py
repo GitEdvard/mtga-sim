@@ -1,4 +1,3 @@
-from mtga_sim.attack_actions import Attack, Pass, SomeIllegalAction
 from mtga_sim.attack_actions import AttackAction
 
 
@@ -42,11 +41,11 @@ class ManoeuvreIterator(object):
         # Increment lowest rank that are less than max
         if troop_pointer < 0:
             raise StopIteration
-        next_trial_action_number = self.permutation_array[troop_pointer] + 1
-        self.permutation_array[troop_pointer] = next_trial_action_number
+        trial_idx = self.permutation_array[troop_pointer] + 1
+        self.permutation_array[troop_pointer] = trial_idx
         action = None
-        if next_trial_action_number < AttackAction.number_actions():
-            action = AttackAction.instantiate(next_trial_action_number, self.troop[troop_pointer])
+        if trial_idx < AttackAction.number_actions():
+            action = AttackAction.instantiate(trial_idx, self.troop[troop_pointer])
         else:
             # Current rank is at max number, go to next rank and reset current
             self.permutation_array[troop_pointer] = \
