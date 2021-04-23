@@ -1,7 +1,7 @@
 from mtga_sim.creature_action import Attack, Pass, Defend
 
 
-class ManoeuvreSpace(object):
+class StrategyCounter(object):
     """
     Can iterate over all possible troop actions for one player during one turn
     """
