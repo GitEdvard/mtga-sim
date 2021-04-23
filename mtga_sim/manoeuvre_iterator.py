@@ -1,4 +1,5 @@
 from mtga_sim.creature_action import Attack, Pass, Defend
+from mtga_sim.creature_action import Action
 
 
 class ManoeuvreIterator(object):
@@ -42,8 +43,8 @@ class ManoeuvreIterator(object):
         next_trial_action_number = self.permutation_array[troop_pointer] + 1
         self.permutation_array[troop_pointer] = next_trial_action_number
         action = None
-        if next_trial_action_number < 3:
-            action = self.get_action(next_trial_action_number)
+        if next_trial_action_number < Action.number_actions():
+            action = Action.instantiate(next_trial_action_number, self.troop[troop_pointer])
         else:
             # Current rank is at max number, go to next rank and reset current
             self.permutation_array[troop_pointer] = 0
@@ -55,18 +56,7 @@ class ManoeuvreIterator(object):
     def convert(self):
         action_arr = list()
         for idx, p in enumerate(self.permutation_array):
-            action = self.get_action(p)
+            action = Action.instantiate(p, self.troop[idx])
             action_arr.append(action)
 
         return action_arr
-
-    def get_action(self, action_number):
-        action = None
-        if action_number == 0:
-            action = Attack(self.troop[self.troop_pointer])
-        if action_number == 1:
-            action = Pass(self.troop[self.troop_pointer])
-        if action_number == 2:
-            action = Defend(self.troop[self.troop_pointer])
-
-        return action

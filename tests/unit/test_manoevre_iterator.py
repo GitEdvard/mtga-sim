@@ -1,6 +1,7 @@
 import pytest
 from mtga_sim.troop import Troop, Creature
 from mtga_sim.manoeuvre_iterator import ManoeuvreIterator
+from mtga_sim.creature_action import Defend, Attack
 
 
 class TestManoeuvreIterator(object):
@@ -10,7 +11,6 @@ class TestManoeuvreIterator(object):
         m = ManoeuvreIterator(troop)
         assert len(m) == 2
 
-    @pytest.mark.now
     def test_troop_of_2__number_permutations_is_4(self):
         creature1 = Creature(2, 2)
         creature2 = Creature(2, 2)
@@ -27,3 +27,24 @@ class TestManoeuvreIterator(object):
         troop = Troop([creature1, creature2, creature3])
         m = ManoeuvreIterator(troop)
         assert len(m) == 8
+
+    def test_convert_first_iteration(self):
+        creature = Creature(2, 2)
+        troop = Troop([creature])
+        m = ManoeuvreIterator(troop)
+        # start iteration at first value
+        iter(m)
+        actions = m.convert()
+        assert isinstance(actions[0], Defend)
+
+    @pytest.mark.now
+    def test_convert_second_iteration(self):
+        creature = Creature(2, 2)
+        troop = Troop([creature])
+        m = ManoeuvreIterator(troop)
+        # start iteration at first value
+        iter(m)
+        next(m)
+        print(m.permutation_array)
+        actions = m.convert()
+        assert isinstance(actions[0], Attack)
