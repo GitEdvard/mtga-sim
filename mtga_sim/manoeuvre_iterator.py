@@ -70,3 +70,11 @@ class ManoeuvreIterator(object):
             action_arr.append(action)
 
         return action_arr
+
+
+class AttackManoeuvreIterator(ManoeuvreIterator):
+    pass
+
+
+class DefendManoeuvreIterator(ManoeuvreIterator):
+    pass
