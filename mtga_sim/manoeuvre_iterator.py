@@ -1,4 +1,6 @@
+import abc
 from mtga_sim.actions.attack_actions import AttackAction
+from mtga_sim.actions.defend_actions import DefendAction
 
 
 class ManoeuvreIterator(object):
@@ -44,8 +46,8 @@ class ManoeuvreIterator(object):
         trial_idx = self.permutation_array[troop_pointer] + 1
         self.permutation_array[troop_pointer] = trial_idx
         action = None
-        if trial_idx < AttackAction.number_actions():
-            action = AttackAction.instantiate(trial_idx, self.troop[troop_pointer])
+        if trial_idx < self.number_actions():
+            action = self.instantiate_action(trial_idx, self.troop[troop_pointer])
         else:
             # Current rank is at max number, go to next rank and reset current
             self.permutation_array[troop_pointer] = \
@@ -57,24 +59,44 @@ class ManoeuvreIterator(object):
 
     def first_legal_action_index(self, troop_pointer):
         creature = self.troop[troop_pointer]
-        for i in range(AttackAction.number_actions()):
-            action = AttackAction.instantiate(i, creature)
+        for i in range(self.number_actions()):
+            action = self.instantiate_action(i, creature)
             if action.is_legal:
                 return i
-        return AttackAction.number_actions()
+        return self.number_actions()
 
     def convert(self):
         action_arr = list()
         for idx, p in enumerate(self.permutation_array):
-            action = AttackAction.instantiate(p, self.troop[idx])
+            action = self.instantiate_action(p, self.troop[idx])
             action_arr.append(action)
 
         return action_arr
 
+    @abc.abstractmethod
+    def instantiate_action(self, action_number, creature):
+        pass
+
+    @abc.abstractmethod
+    def number_actions(self):
+        pass
+
 
 class AttackManoeuvreIterator(ManoeuvreIterator):
-    pass
+    def instantiate_action(self, action_number, creature):
+        return AttackAction.instantiate(action_number, creature)
+
+    def number_actions(self):
+        return AttackAction.number_actions()
 
 
 class DefendManoeuvreIterator(ManoeuvreIterator):
-    pass
+    def __init__(self, troop, attacking_manoeuvre):
+        super().__init__(troop)
+        self.attacking_manoeuvre = attacking_manoeuvre
+
+    def instantiate_action(self, action_number, creature):
+        return DefendAction.instantiate(action_number, creature)
+
+    def number_actions(self):
+        return DefendAction.number_actions()

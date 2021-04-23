@@ -1,12 +1,14 @@
 import abc
 import sys
 import inspect
+import uuid
 
 
 class Action(abc.ABC):
     def __init__(self, creature):
         self.creature = creature
         self.legal = False
+        self.id = uuid.uuid4()
 
     @classmethod
     @abc.abstractmethod

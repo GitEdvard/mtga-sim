@@ -1,4 +1,5 @@
 {
   "tests/unit/test_action_permutations.py": true, 
+  "tests/unit/test_defend_manoeuvres.py": true, 
   "tests/unit/test_troop.py": true
 }
