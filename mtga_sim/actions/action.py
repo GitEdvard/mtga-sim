@@ -33,7 +33,7 @@ class Action(abc.ABC):
         return self.legal
 
     @classmethod
-    def _get_subclasses(cls):
+    def get_subclasses(cls):
         ret = list()
         """Yield the classes in module ``mod`` that inherit from ``cls``"""
         current_module = sys.modules[cls.__module__]
@@ -48,6 +48,6 @@ class Action(abc.ABC):
 
     @classmethod
     def instantiate(cls, action_number, creature):
-        for clazz in cls._get_subclasses():
+        for clazz in cls.get_subclasses():
             if clazz.action_index() == action_number:
                 return clazz(creature)

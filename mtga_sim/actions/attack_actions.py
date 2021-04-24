@@ -4,7 +4,7 @@ from mtga_sim.actions.action import Action
 class AttackAction(Action):
     @classmethod
     def number_actions(cls):
-        classes = cls._get_subclasses()
+        classes = cls.get_subclasses()
         return len([c for c in classes])
 
 

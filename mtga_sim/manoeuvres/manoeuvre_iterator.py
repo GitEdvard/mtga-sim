@@ -1,6 +1,32 @@
 import abc
 from mtga_sim.actions.attack_actions import AttackAction
 from mtga_sim.actions.defend_actions import DefendAction
+from mtga_sim.manoeuvres.manoeuvre import Manoeuvre
+
+
+class DefendManoeuvreSpace(object):
+    """
+    All possible actions for a troop at a single round.
+    Could be either defend och attacking mode.
+    """
+    def __init__(self, troop, attacking_manoeuvre):
+        self.attacking_manoeuvre = attacking_manoeuvre
+        self.troop = troop
+        self.space = dict()
+
+    def build(self):
+        for creature in self.troop:
+            actions = list()
+            for clazz in DefendAction.get_subclasses():
+                actions.extend(clazz.create_instances(creature, self.attacking_manoeuvre))
+
+            self.space[creature] = actions
+
+    def __getitem__(self, item):
+        return self.space[item]
+
+    def number_actions_for(self, creature):
+        return len(self[creature])
 
 
 class ManoeuvreIterator(object):
@@ -71,7 +97,7 @@ class ManoeuvreIterator(object):
             action = self.instantiate_action(p, self.troop[idx])
             action_arr.append(action)
 
-        return action_arr
+        return Manoeuvre(action_arr)
 
     @abc.abstractmethod
     def instantiate_action(self, action_number, creature):
@@ -99,12 +125,10 @@ class DefendManoeuvreIterator(ManoeuvreIterator):
         return DefendAction.instantiate(action_number, creature)
 
     def number_actions(self):
-        return DefendAction.number_actions()
-
-    def create_defend_manoeuvre_space(self):
+        # TODO: this method concept needs to be replaced
         actions = list()
-        for creature in self.troop:
-            for i in range(DefendAction.number_actions()):
-                actions.append(DefendAction.instantiate(i, creature))
+        for clazz in DefendAction.get_subclasses():
+            actions.extend(clazz.create_instances(None, self.attacking_manoeuvre))
 
-        return actions
+        print(actions)
+        return len(actions)
