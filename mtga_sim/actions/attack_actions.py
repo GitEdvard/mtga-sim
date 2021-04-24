@@ -7,6 +7,10 @@ class AttackAction(Action):
         classes = cls.get_subclasses()
         return len([c for c in classes])
 
+    @property
+    def is_legal(self):
+        return self.legal
+
 
 class SomeIllegalAction(AttackAction):
     def __init__(self, *args):

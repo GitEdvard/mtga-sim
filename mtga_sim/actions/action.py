@@ -28,10 +28,6 @@ class Action(abc.ABC):
     def number_actions(cls):
         pass
 
-    @property
-    def is_legal(self):
-        return self.legal
-
     @classmethod
     def get_subclasses(cls):
         ret = list()

@@ -26,13 +26,13 @@ class TestDefendManoeuvres(TestBase):
         defend_action = single(defend_strat)
         assert defend_action.target_id == attack_action.id
 
-    def test_response_to_1_attacking__number_actions_is_3(self):
+    def test_response_to_1_attacking__number_actions_is_2(self):
         creatures = self.create_standard_creatues(1)
         attack_action = AttackAction.instantiate(Attack.action_index(), creatures[0])
         attack_manoeuvre = Manoeuvre([attack_action])
         troop = Troop(creatures)
         it = ManoeuvreIterator(troop, attack_manoeuvre)
-        assert it.number_actions() == 3
+        assert it.number_actions() == 2
 
     @pytest.mark.now
     def test_response_to_2_attacking__number_actions_is_4(self):
@@ -42,4 +42,4 @@ class TestDefendManoeuvres(TestBase):
         troop = Troop(creatures)
         it = ManoeuvreIterator(troop, attack_manoeuvre)
         # Number of actions for each defending creature
-        assert it.number_actions() == 4
+        assert it.number_actions() == 3
