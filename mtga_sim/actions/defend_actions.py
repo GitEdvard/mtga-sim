@@ -2,7 +2,10 @@ from mtga_sim.actions.action import Action
 
 
 class DefendAction(Action):
-    pass
+    @classmethod
+    def number_actions(cls):
+        classes = cls._get_subclasses()
+        return len([c for c in classes])
 
 
 class SomeIllegalAction(DefendAction):

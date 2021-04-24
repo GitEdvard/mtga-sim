@@ -24,9 +24,9 @@ class Action(abc.ABC):
         return self.creature.toughness
 
     @classmethod
+    @abc.abstractmethod
     def number_actions(cls):
-        classes = cls._get_subclasses()
-        return len([c for c in classes])
+        pass
 
     @property
     def is_legal(self):

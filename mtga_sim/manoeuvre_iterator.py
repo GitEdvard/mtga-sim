@@ -100,3 +100,11 @@ class DefendManoeuvreIterator(ManoeuvreIterator):
 
     def number_actions(self):
         return DefendAction.number_actions()
+
+    def create_defend_manoeuvre_space(self):
+        actions = list()
+        for creature in self.troop:
+            for i in range(DefendAction.number_actions()):
+                actions.append(DefendAction.instantiate(i, creature))
+
+        return actions
