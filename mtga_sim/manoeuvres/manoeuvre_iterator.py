@@ -4,15 +4,29 @@ from mtga_sim.actions.defend_actions import DefendAction
 from mtga_sim.manoeuvres.manoeuvre import Manoeuvre
 
 
-class DefendManoeuvreSpace(object):
+class ManoeuvreSpaceBase(object):
+    def __init__(self, troop):
+        self.troop = troop
+        self.space = dict()
+
+    def __getitem__(self, item):
+        return self.space[item]
+
+    def number_actions_for(self, creature):
+        return len(self[creature])
+
+    def number_nodes(self):
+        return sum([len(self.space[key]) for key in self.space])
+
+
+class DefendManoeuvreSpace(ManoeuvreSpaceBase):
     """
     All possible actions for a troop at a single round.
     Could be either defend och attacking mode.
     """
     def __init__(self, troop, attacking_manoeuvre):
+        super().__init__(troop)
         self.attacking_manoeuvre = attacking_manoeuvre
-        self.troop = troop
-        self.space = dict()
 
     def build(self):
         for creature in self.troop:
@@ -22,11 +36,18 @@ class DefendManoeuvreSpace(object):
 
             self.space[creature] = actions
 
-    def __getitem__(self, item):
-        return self.space[item]
 
-    def number_actions_for(self, creature):
-        return len(self[creature])
+class AttackManoeuvreSpace(ManoeuvreSpaceBase):
+    def __init__(self, troop):
+        super().__init__(troop)
+
+    def build(self):
+        for creature in self.troop:
+            actions = list()
+            for clazz in AttackAction.get_subclasses():
+                actions.extend(clazz.create_instances(creature))
+
+            self.space[creature] = actions
 
 
 class ManoeuvreIterator(object):
