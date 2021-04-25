@@ -10,7 +10,6 @@ class TestManoeuvreSpace(TestBase):
         attacking_manoeuvre = self.attack_with(creatures)
         troop = Troop(creatures)
         manoeuvre_space = DefendManoeuvreSpace(troop, attacking_manoeuvre)
-        manoeuvre_space.build()
         assert manoeuvre_space.number_actions_for(creatures[0]) == 2
 
     def test_number_defend_actions_for_2_attacking(self):
