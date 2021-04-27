@@ -1,5 +1,5 @@
 from mtga_sim.actions.attack_actions import AttackAction, Attack
-from mtga_sim.troop import Creature
+from mtga_sim.troop import Creature, Troop
 
 
 class TestBase:
@@ -9,6 +9,10 @@ class TestBase:
             creatures.append(Creature(2, 2))
 
         return creatures
+
+    def create_standard_troop(self, count):
+        creatures = self.create_standard_creatues(count)
+        return Troop(creatures)
 
     def attack_with(self, creatures):
         actions = list()

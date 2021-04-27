@@ -88,3 +88,26 @@ class ManoeuvreIterator(object):
 
         for action in manoeuvre_space[current_key]:
             yield from self.increment_rec(next_space, prev_actions + [action])
+
+
+class CombinedManoeuvreIterator(object):
+    def __init__(self, troop_a, troop_b):
+        self.troop_a = troop_a
+        self.troop_b = troop_b
+        self.gen = None
+
+    def __iter__(self):
+        self.gen = self.increment()
+        return self
+
+    def __next__(self):
+        return next(self.gen)
+
+    def increment(self):
+        attack_space = AttackManoeuvreSpace(self.troop_a)
+        attack_it = ManoeuvreIterator(attack_space)
+        for attack_manoeuvre in attack_it:
+            defend_space = DefendManoeuvreSpace(self.troop_b, attack_manoeuvre)
+            defend_it = ManoeuvreIterator(defend_space)
+            for defend_manoeuvre in defend_it:
+                yield attack_manoeuvre, defend_manoeuvre

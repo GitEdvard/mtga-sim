@@ -1,4 +1,7 @@
 from mtga_sim.troop import Creature, Troop
+from mtga_sim.manoeuvres.manoeuvre_iterator import AttackManoeuvreSpace
+from mtga_sim.manoeuvres.manoeuvre_iterator import DefendManoeuvreSpace
+from mtga_sim.manoeuvres.manoeuvre_iterator import ManoeuvreIterator
 
 
 class App(object):
@@ -10,11 +13,21 @@ class App(object):
         print('player A: {}'.format(cards_a))
         self.validate(cards_a)
         self.validate(cards_b)
-        self.loop_strategies(cards_a, cards_b)
-
-    def loop_strategies(self, cards_a, cards_b):
         troop = self.parse(cards_a)
         print(troop)
+
+    def loop_strategies(self, cards_a, cards_b):
+        self.validate(cards_a)
+        self.validate(cards_b)
+        troop_a = self.parse(cards_a)
+        troop_b = self.parse(cards_b)
+        attack_space = AttackManoeuvreSpace(troop_a)
+        attack_it = ManoeuvreIterator(attack_space)
+        for attack_manoeuvre in attack_it:
+            defend_space = DefendManoeuvreSpace(troop_b, attack_manoeuvre)
+            defend_it = ManoeuvreIterator(defend_space)
+            for defend_manoeuvre in defend_it:
+                pass
 
     def validate(self, cards):
         cards_lst = cards.split(';')
