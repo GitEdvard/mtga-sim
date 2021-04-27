@@ -59,9 +59,9 @@ class Pass(DefendAction):
 
 
 class Defend(DefendAction):
-    def __init__(self, *args):
+    def __init__(self, *args, referenced_id):
         super().__init__(*args)
-        self.legal = True
+        self.referenced_id = referenced_id
 
     @classmethod
     def action_index(cls):
@@ -76,5 +76,5 @@ class Defend(DefendAction):
         actions = list()
         for a in attacking_manoeuvre:
             if str(a) == 'Attack' and cls.is_legal(a):
-                actions.append(Defend(creature))
+                actions.append(Defend(creature, referenced_id=a.id))
         return actions
