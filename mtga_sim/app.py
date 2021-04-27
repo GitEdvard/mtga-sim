@@ -1,7 +1,5 @@
 from mtga_sim.troop import Creature, Troop
-from mtga_sim.manoeuvres.manoeuvre_iterator import AttackManoeuvreSpace
-from mtga_sim.manoeuvres.manoeuvre_iterator import DefendManoeuvreSpace
-from mtga_sim.manoeuvres.manoeuvre_iterator import ManoeuvreIterator
+from mtga_sim.manoeuvres.manoeuvre_iterator import CombinedManoeuvreIterator
 
 
 class App(object):
@@ -13,21 +11,25 @@ class App(object):
         print('player A: {}'.format(cards_a))
         self.validate(cards_a)
         self.validate(cards_b)
-        troop = self.parse(cards_a)
+        troop = self.parse_single_player(cards_a)
         print(troop)
+
+    def show_first(self, cards_a, cards_b):
+        troop_attacking, troop_defending = self.parse_input(cards_a, cards_b)
+        iterator = CombinedManoeuvreIterator(troop_attacking, troop_defending)
+        iter(iterator)
+        attack, defend = next(iterator)
+        print(attack)
+        print(defend)
 
     def loop_strategies(self, cards_a, cards_b):
         self.validate(cards_a)
         self.validate(cards_b)
-        troop_a = self.parse(cards_a)
-        troop_b = self.parse(cards_b)
-        attack_space = AttackManoeuvreSpace(troop_a)
-        attack_it = ManoeuvreIterator(attack_space)
-        for attack_manoeuvre in attack_it:
-            defend_space = DefendManoeuvreSpace(troop_b, attack_manoeuvre)
-            defend_it = ManoeuvreIterator(defend_space)
-            for defend_manoeuvre in defend_it:
-                pass
+        troop_a = self.parse_single_player(cards_a)
+        troop_b = self.parse_single_player(cards_b)
+        iterator = CombinedManoeuvreIterator(troop_a, troop_b)
+        for attack, defend in iterator:
+            pass
 
     def validate(self, cards):
         cards_lst = cards.split(';')
@@ -39,7 +41,14 @@ class App(object):
             if len(spl) != 2:
                 raise ValueError('Parse error, should be len 2, {}'.format(c))
 
-    def parse(self, cards_str):
+    def parse_input(self, cards_attacking, cards_defending):
+        self.validate(cards_attacking)
+        self.validate(cards_defending)
+        troop_attacking = self.parse_single_player(cards_attacking)
+        troop_defending = self.parse_single_player(cards_defending)
+        return troop_attacking, troop_defending
+
+    def parse_single_player(self, cards_str):
         """
         :param cards_str: like "2/4;2/3"
         :return: A Troop

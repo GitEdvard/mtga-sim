@@ -59,13 +59,10 @@ class ManoeuvreIterator(object):
     def __init__(self, manoeuvre_space):
         self.manoeuvre_space = manoeuvre_space
         self.creature_iterator = None
-        self.current_key = None
-        self.current_state = None
         self.gen = None
 
     def __iter__(self):
         self.creature_iterator = iter(self.manoeuvre_space.space)
-        self.current_state = None
         self.gen = self.increment_rec(self.manoeuvre_space.space, [])
         return self
 
