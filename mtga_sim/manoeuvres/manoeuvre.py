@@ -8,3 +8,6 @@ class Manoeuvre(object):
 
     def __getitem__(self, item):
         return self.actions[item]
+
+    def __hash__(self):
+        return hash(a.id for a in self.actions)

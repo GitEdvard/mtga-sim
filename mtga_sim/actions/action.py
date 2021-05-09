@@ -15,6 +15,9 @@ class Action(abc.ABC):
     def action_index(cls):
         pass
 
+    def __hash__(self):
+        return hash(self.id)
+
     @property
     def power(self):
         return self.creature.power

@@ -15,3 +15,16 @@ class TestCombinedIterator(TestBase):
         troop_defending = self.create_standard_troop(1)
         it = CombinedManoeuvreIterator(troop_attacking, troop_defending)
         assert len([pair for pair in it]) == 8
+
+    @pytest.mark.skip('')
+    def test_all_iterations_are_unique(self):
+        troop_attacking = self.create_standard_troop(2)
+        troop_defending = self.create_standard_troop(1)
+        it = CombinedManoeuvreIterator(troop_attacking, troop_defending)
+        pairs = [pair for pair in it]
+        for p in pairs:
+            print(type(p))
+        hashes = [hash(m for m in p) for p in pairs]
+        print(type(pairs[0]))
+        unique_pairs = list(set(hashes))
+        assert len(pairs) == len(unique_pairs)
