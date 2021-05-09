@@ -1,5 +1,7 @@
 from mtga_sim.actions.attack_actions import AttackAction, Attack
+from mtga_sim.actions.defend_actions import Defend
 from mtga_sim.troop import Creature, Troop
+from mtga_sim.manoeuvres.manoeuvre import Manoeuvre
 
 
 class TestBase:
@@ -19,4 +21,15 @@ class TestBase:
         for c in creatures:
             actions.append(AttackAction.instantiate(Attack.action_index(), c))
 
-        return actions
+        return Manoeuvre(actions)
+
+    def defend_first_with(self, creatures, offensive_manoeuvre):
+        """
+        All creatures defend from the first creature in the offensive troop
+        """
+        defend_actions = list()
+        for c in creatures:
+            defend_actions.append(Defend(
+                c, referenced_id=offensive_manoeuvre[0].id
+            ))
+        return Manoeuvre(defend_actions)

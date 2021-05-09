@@ -1,6 +1,7 @@
 from abc import abstractmethod
 from mtga_sim.actions.attack_actions import AttackAction
 from mtga_sim.actions.defend_actions import DefendAction
+from mtga_sim.manoeuvres.manoeuvre import Manoeuvre
 
 
 class ManoeuvreSpaceBase(object):
@@ -80,7 +81,7 @@ class ManoeuvreIterator(object):
                 for key in manoeuvre_space if not key == current_key
             }
         except StopIteration:
-            yield prev_actions
+            yield Manoeuvre(prev_actions)
             return
 
         for action in manoeuvre_space[current_key]:

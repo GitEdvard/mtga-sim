@@ -1,3 +1,4 @@
+from mtga_sim.battle import Battle
 from mtga_sim.troop import Creature, Troop
 from mtga_sim.manoeuvres.manoeuvre_iterator import CombinedManoeuvreIterator
 
@@ -14,13 +15,39 @@ class App(object):
         troop = self.parse_single_player(cards_a)
         print(troop)
 
-    def show_first(self, cards_a, cards_b):
+    def show_first_battle(self, cards_a, cards_b):
+        """
+        working now
+        """
+        troop_attacking, troop_defending = self.parse_input(cards_a, cards_b)
+        iterator = CombinedManoeuvreIterator(troop_attacking, troop_defending)
+        iter(iterator)
+        attack, defend = next(iterator)
+        battle = Battle(attack, defend)
+        skirmishes = battle.create_skirmishes()
+        s = skirmishes[0]
+        attack_troop = Troop([s.attacker.creature])
+        defend_troop = Troop([d.creature for d in s.defenders])
+        uppward_arrow ='\u2191'
+        print(defend_troop)
+        print(uppward_arrow)
+        print(attack_troop)
+
+    def show_first_manoeuvre_action(self, cards_a, cards_b):
         troop_attacking, troop_defending = self.parse_input(cards_a, cards_b)
         iterator = CombinedManoeuvreIterator(troop_attacking, troop_defending)
         iter(iterator)
         attack, defend = next(iterator)
         print(attack)
         print(defend)
+
+    def show_all_manoeuvre_actions(self, cards_a, cards_b):
+        troop_attacking, troop_defending = self.parse_input(cards_a, cards_b)
+        iterator = CombinedManoeuvreIterator(troop_attacking, troop_defending)
+        for offensive, defensive in iterator:
+            print(offensive)
+            print(defensive)
+            input("hit enter")
 
     def loop_strategies(self, cards_a, cards_b):
         self.validate(cards_a)
