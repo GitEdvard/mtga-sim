@@ -22,6 +22,14 @@ class App(object):
         print(attack)
         print(defend)
 
+    def show_all(self, cards_a, cards_b):
+        troop_attacking, troop_defending = self.parse_input(cards_a, cards_b)
+        iterator = CombinedManoeuvreIterator(troop_attacking, troop_defending)
+        for offensive, defensive in iterator:
+            print(offensive)
+            print(defensive)
+            input("hit enter")
+
     def loop_strategies(self, cards_a, cards_b):
         self.validate(cards_a)
         self.validate(cards_b)
