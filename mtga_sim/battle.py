@@ -21,13 +21,13 @@ class Battle:
         for d, a in ids:
             defenders_by_attacking_id[a].append(d)
 
-        skirmishes = list()
+        self.skirmishes = list()
         for attack_id, defend_ids in defenders_by_attacking_id.items():
             attacker = self.offensive_manoeuvre.get_by(attack_id)
             defenders = [
                 self.defensive_manoeuvre.get_by(id)
                 for id in defend_ids
             ]
-            skirmishes.append(Skirmish(attacker, defenders))
+            self.skirmishes.append(Skirmish(attacker, defenders))
 
-        return skirmishes
+        return self.skirmishes

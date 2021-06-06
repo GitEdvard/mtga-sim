@@ -26,6 +26,7 @@ class App(object):
         battle = Battle(attack, defend)
         skirmishes = battle.create_skirmishes()
         s = skirmishes[0]
+        print(type(s.attacker))
         attack_troop = Troop([s.attacker.creature])
         defend_troop = Troop([d.creature for d in s.defenders])
         uppward_arrow ='\u2191'
