@@ -17,7 +17,7 @@ class Battle:
     def create_skirmishes(self):
         # Group by attacking creature
         ids = [(d.id, d.referenced_id) for d in self.defensive_manoeuvre]
-        defenders_by_attacking_id = defaultdict(list)
+        defenders_by_attacking_id = {a.id: list() for a in self.offensive_manoeuvre}
         for d, a in ids:
             defenders_by_attacking_id[a].append(d)
 

@@ -18,7 +18,7 @@ class TestSkirmishes(TestBase):
         skirmish = self._create_skirmish_defend_first()
 
         # Act
-        skirmish_view = SkirmishView(skirmish)
+        skirmish_view = SkirmishView(skirmish, padding_str="+")
 
         # Assert
         assert skirmish_view.width == 7
@@ -28,7 +28,7 @@ class TestSkirmishes(TestBase):
         skirmish = self._create_skirmish_defend_first()
 
         # Act
-        skirmish_view = SkirmishView(skirmish)
+        skirmish_view = SkirmishView(skirmish, padding_str="+")
 
         # Assert
         assert skirmish_view.defender_string == "2/2 2/2"
@@ -38,7 +38,8 @@ class TestSkirmishes(TestBase):
         skirmish = self._create_skirmish_defend_first()
 
         # Act
-        skirmish_view = SkirmishView(skirmish)
+        skirmish_view = SkirmishView(skirmish, padding_str="+")
 
         # Assert
-        assert skirmish_view.attacker_string == "2/2    "
+        assert skirmish_view.attacker_string == "2/2++++"
+

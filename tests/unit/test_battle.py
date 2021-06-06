@@ -25,7 +25,7 @@ class TestBattle(TestBase):
 
     def test_2_attacking_2_defending__2_skirmishes(self):
         # Arrange defensive manoeuvre
-        battle = self._create_battle(creature_count=1)
+        battle = self._create_battle(creature_count=2)
 
         # Act
         skirmishes = battle.create_skirmishes()

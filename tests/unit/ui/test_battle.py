@@ -17,17 +17,17 @@ class TestBattle(TestBase):
         battle = self._create_battle()
 
         # Act
-        battle_view = BattleView(battle)
+        battle_view = BattleView(battle, padding_str="+")
 
         # Assert
-        assert battle_view.defend_string == '2/2 2/2'
+        assert battle_view.defend_string == '2/2 2/2++++'
 
     def test_attack_string_for_two_skirmishes(self):
         battle = self._create_battle()
 
         # Act
-        battle_view = BattleView(battle)
+        battle_view = BattleView(battle, padding_str="+")
 
         # Assert
-        assert battle_view.attack_string == '2/2    '
+        assert battle_view.attack_string == '2/2+++++2/2'
 
