@@ -2,6 +2,8 @@ from mtga_sim.troop import Troop
 
 
 class SkirmishView(object):
+    UPWARD_ARROW = '\u2191'
+
     def __init__(self, skirmish, padding_str=None):
         self.skirmish = skirmish
         if not padding_str:
@@ -23,6 +25,12 @@ class SkirmishView(object):
         padding_cand = self.width - self._attacker_len
         padding = padding_cand if padding_cand > 0 else 0
         return "{}{}".format(self._attacker_creature, self.padding_str * padding)
+
+    @property
+    def attack_arrows_string(self):
+        padding_cand = self.width - 1
+        padding = padding_cand if padding_cand > 0 else 0
+        return "{}{}".format(self.UPWARD_ARROW, self.padding_str * padding)
 
     @property
     def _defender_len(self):

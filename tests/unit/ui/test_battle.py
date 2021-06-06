@@ -1,5 +1,6 @@
 from mtga_sim.battle import Battle
 from mtga_sim.ui.battle_view import BattleView
+from mtga_sim.ui.skirmish_view import SkirmishView
 from tests.unit.test_base import TestBase
 
 
@@ -30,4 +31,14 @@ class TestBattle(TestBase):
 
         # Assert
         assert battle_view.attack_string == '2/2+++++2/2'
+
+    def test_attack_arrow_string_for_two_skirmishes(self):
+        battle = self._create_battle()
+
+        # Act
+        battle_view = BattleView(battle, padding_str="+")
+
+        # Assert
+        expected = '{}+++++++{}++'.format(SkirmishView.UPWARD_ARROW, SkirmishView.UPWARD_ARROW)
+        assert battle_view.attack_arrows_string == expected
 

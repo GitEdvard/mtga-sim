@@ -23,3 +23,8 @@ class BattleView(object):
     def attack_string(self):
         margin = self.padding_str * self.SKIRMISH_MARGIN_LENGTH
         return margin.join([view.attacker_string for view in self.skirmish_views])
+
+    @property
+    def attack_arrows_string(self):
+        margin = self.padding_str * self.SKIRMISH_MARGIN_LENGTH
+        return margin.join([view.attack_arrows_string for view in self.skirmish_views])

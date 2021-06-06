@@ -43,3 +43,13 @@ class TestSkirmishes(TestBase):
         # Assert
         assert skirmish_view.attacker_string == "2/2++++"
 
+    def test_attack_arrow_string(self):
+        # Arrange
+        skirmish = self._create_skirmish_defend_first()
+
+        # Act
+        skirmish_view = SkirmishView(skirmish, padding_str="+")
+
+        # Assert
+        assert skirmish_view.attack_arrows_string == "{}++++++".format(SkirmishView.UPWARD_ARROW)
+
