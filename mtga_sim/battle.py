@@ -13,12 +13,13 @@ class Battle:
         self.offensive_manoeuvre = offensive_manoeuvre
         self.defensive_manoeuvre = defensive_manoeuvre
         self.skirmishes = None
-        self.create_skirmishes()
 
     def create_skirmishes(self):
         # Group by attacking creature
-        ids = [(d.id, d.referenced_id) for d in self.defensive_manoeuvre]
-        defenders_by_attacking_id = {a.id: list() for a in self.offensive_manoeuvre}
+        active_defense = [d for d in self.defensive_manoeuvre if d.is_active()]
+        ids = [(d.id, d.referenced_id) for d in active_defense]
+        active_offense = [a for a in self.offensive_manoeuvre if a.is_active()]
+        defenders_by_attacking_id = {a.id: list() for a in active_offense}
         for d, a in ids:
             defenders_by_attacking_id[a].append(d)
 

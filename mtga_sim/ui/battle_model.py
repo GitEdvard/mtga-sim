@@ -17,7 +17,10 @@ class BattleModel(object):
     @property
     def defend_string(self):
         margin = self.padding_str * self.SKIRMISH_MARGIN_LENGTH
-        return margin.join([view.defender_string for view in self.skirmish_views])
+        active_defenders = [view.defender_string for view in self.skirmish_views]
+        passive_defenders = []
+        defend_row = active_defenders + passive_defenders
+        return margin.join(defend_row)
 
     @property
     def attack_string(self):

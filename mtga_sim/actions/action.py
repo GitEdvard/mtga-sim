@@ -18,6 +18,11 @@ class Action(abc.ABC):
     def __hash__(self):
         return hash(self.id)
 
+    @staticmethod
+    @abc.abstractmethod
+    def is_active():
+        pass
+
     @property
     def power(self):
         return self.creature.power
@@ -50,3 +55,5 @@ class Action(abc.ABC):
         for clazz in cls.get_subclasses():
             if clazz.action_index() == action_number:
                 return clazz(creature)
+
+        raise AssertionError("No class instance was found")

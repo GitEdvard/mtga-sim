@@ -27,6 +27,10 @@ class SomeIllegalAction(DefendAction):
     def action_index(cls):
         return 0
 
+    @staticmethod
+    def is_active():
+        return False
+
     @classmethod
     def is_legal(cls, attacking_action):
         return False
@@ -49,6 +53,10 @@ class Pass(DefendAction):
     def action_index(cls):
         return 1
 
+    @staticmethod
+    def is_active():
+        return False
+
     @classmethod
     def is_legal(cls, attacking_action):
         return True
@@ -66,6 +74,10 @@ class Defend(DefendAction):
     @classmethod
     def action_index(cls):
         return 2
+
+    @staticmethod
+    def is_active():
+        return True
 
     @classmethod
     def is_legal(cls, attacking_action):

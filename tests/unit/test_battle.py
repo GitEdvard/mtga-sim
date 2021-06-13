@@ -13,6 +13,13 @@ class TestBattle(TestBase):
         defensive_manoeuvre = self.defend_first_with(defending_creatures, offensive_manoeuvre)
         return Battle(offensive_manoeuvre, defensive_manoeuvre)
 
+    def _create_passive_battle(self, creature_count=1):
+        attacking_creatures = self.create_standard_creatues(creature_count)
+        defending_creatures = self.create_standard_creatues(creature_count)
+        offensive_manoeuvre = self.passive_attackers_with(attacking_creatures)
+        defensive_manoeuvre = self.passive_defenders_with(defending_creatures)
+        return Battle(offensive_manoeuvre, defensive_manoeuvre)
+
     def test_1_attacking_1_defending__skirmish_with_1_defending(self):
         # Arrange defensive manoeuvre
         battle = self._create_battle(creature_count=1)
@@ -32,3 +39,13 @@ class TestBattle(TestBase):
 
         # Assert
         assert len(skirmishes) == 2
+
+    def test_1_passive_against_1_passive__0_skirmishes(self):
+        # Arrange
+        battle = self._create_passive_battle(1)
+
+        # Act
+        battle.create_skirmishes()
+
+        # Assert
+        assert len(battle.skirmishes) == 0

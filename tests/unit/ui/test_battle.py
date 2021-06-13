@@ -18,27 +18,27 @@ class TestBattle(TestBase):
         battle = self._create_battle()
 
         # Act
-        battle_view = BattleModel(battle, padding_str="+")
+        battle_model = BattleModel(battle, padding_str="+")
 
         # Assert
-        assert battle_view.defend_string == '2/2 2/2++++'
+        assert battle_model.defend_string == '2/2 2/2++++'
 
     def test_attack_string_for_two_skirmishes(self):
         battle = self._create_battle()
 
         # Act
-        battle_view = BattleModel(battle, padding_str="+")
+        battle_model = BattleModel(battle, padding_str="+")
 
         # Assert
-        assert battle_view.attack_string == '2/2+++++2/2'
+        assert battle_model.attack_string == '2/2+++++2/2'
 
     def test_attack_arrow_string_for_two_skirmishes(self):
         battle = self._create_battle()
 
         # Act
-        battle_view = BattleModel(battle, padding_str="+")
+        battle_model = BattleModel(battle, padding_str="+")
 
         # Assert
         expected = '{}+++++++{}++'.format(SkirmishModel.UPWARD_ARROW, SkirmishModel.UPWARD_ARROW)
-        assert battle_view.attack_arrows_string == expected
+        assert battle_model.attack_arrows_string == expected
 

@@ -32,6 +32,10 @@ class SomeIllegalAction(AttackAction):
     def create_instances(cls, creature):
         return []
 
+    @staticmethod
+    def is_active():
+        return False
+
 
 class Attack(AttackAction):
     def __init__(self, *args):
@@ -46,6 +50,10 @@ class Attack(AttackAction):
     def action_index(cls):
         return 1
 
+    @staticmethod
+    def is_active():
+        return True
+
 
 class Pass(AttackAction):
     def __init__(self, *args):
@@ -59,3 +67,7 @@ class Pass(AttackAction):
     @classmethod
     def create_instances(cls, creature):
         return [Pass(creature)]
+
+    @staticmethod
+    def is_active():
+        return False

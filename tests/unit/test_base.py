@@ -1,5 +1,5 @@
-from mtga_sim.actions.attack_actions import AttackAction, Attack
-from mtga_sim.actions.defend_actions import Defend
+from mtga_sim.actions.attack_actions import AttackAction, Attack, Pass as OffensivePass
+from mtga_sim.actions.defend_actions import Defend, Pass as DefensivePass, DefendAction
 from mtga_sim.troop import Creature, Troop
 from mtga_sim.manoeuvres.manoeuvre import Manoeuvre
 
@@ -20,6 +20,20 @@ class TestBase:
         actions = list()
         for c in creatures:
             actions.append(AttackAction.instantiate(Attack.action_index(), c))
+
+        return Manoeuvre(actions)
+
+    def passive_attackers_with(self, creatures):
+        actions = list()
+        for c in creatures:
+            actions.append(AttackAction.instantiate(OffensivePass.action_index(), c))
+
+        return Manoeuvre(actions)
+
+    def passive_defenders_with(self, creatures):
+        actions = list()
+        for c in creatures:
+            actions.append(DefendAction.instantiate(DefensivePass.action_index(), c))
 
         return Manoeuvre(actions)
 
