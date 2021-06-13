@@ -1,6 +1,6 @@
 from mtga_sim.battle import Battle
-from mtga_sim.ui.battle_view import BattleView
-from mtga_sim.ui.skirmish_view import SkirmishView
+from mtga_sim.ui.battle_model import BattleModel
+from mtga_sim.ui.skirmish_model import SkirmishModel
 from tests.unit.test_base import TestBase
 
 
@@ -18,7 +18,7 @@ class TestBattle(TestBase):
         battle = self._create_battle()
 
         # Act
-        battle_view = BattleView(battle, padding_str="+")
+        battle_view = BattleModel(battle, padding_str="+")
 
         # Assert
         assert battle_view.defend_string == '2/2 2/2++++'
@@ -27,7 +27,7 @@ class TestBattle(TestBase):
         battle = self._create_battle()
 
         # Act
-        battle_view = BattleView(battle, padding_str="+")
+        battle_view = BattleModel(battle, padding_str="+")
 
         # Assert
         assert battle_view.attack_string == '2/2+++++2/2'
@@ -36,9 +36,9 @@ class TestBattle(TestBase):
         battle = self._create_battle()
 
         # Act
-        battle_view = BattleView(battle, padding_str="+")
+        battle_view = BattleModel(battle, padding_str="+")
 
         # Assert
-        expected = '{}+++++++{}++'.format(SkirmishView.UPWARD_ARROW, SkirmishView.UPWARD_ARROW)
+        expected = '{}+++++++{}++'.format(SkirmishModel.UPWARD_ARROW, SkirmishModel.UPWARD_ARROW)
         assert battle_view.attack_arrows_string == expected
 

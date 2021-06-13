@@ -1,7 +1,7 @@
 from mtga_sim.troop import Troop
 
 
-class SkirmishView(object):
+class SkirmishModel(object):
     UPWARD_ARROW = '\u2191'
 
     def __init__(self, skirmish, padding_str=None):

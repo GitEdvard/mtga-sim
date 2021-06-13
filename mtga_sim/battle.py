@@ -13,6 +13,7 @@ class Battle:
         self.offensive_manoeuvre = offensive_manoeuvre
         self.defensive_manoeuvre = defensive_manoeuvre
         self.skirmishes = None
+        self.create_skirmishes()
 
     def create_skirmishes(self):
         # Group by attacking creature

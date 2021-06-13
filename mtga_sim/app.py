@@ -1,7 +1,9 @@
 from mtga_sim.battle import Battle
 from mtga_sim.troop import Creature, Troop
 from mtga_sim.manoeuvres.manoeuvre_iterator import CombinedManoeuvreIterator
+from mtga_sim.ui.battle_controller import BattleController
 from mtga_sim.ui.battle_view import BattleView
+from mtga_sim.ui.battle_model import BattleModel
 
 
 class App(object):
@@ -25,26 +27,16 @@ class App(object):
         iter(iterator)
         attack, defend = next(iterator)
         battle = Battle(attack, defend)
-        battle.create_skirmishes()
-        battle_view = BattleView(battle)
-        print(battle_view.defend_string)
-        print(battle_view.attack_arrows_string)
-        print(battle_view.attack_string)
-
-    def show_first_manoeuvre_action(self, cards_a, cards_b):
-        troop_attacking, troop_defending = self.parse_input(cards_a, cards_b)
-        iterator = CombinedManoeuvreIterator(troop_attacking, troop_defending)
-        iter(iterator)
-        attack, defend = next(iterator)
-        print(attack)
-        print(defend)
+        battle_controller = BattleController()
+        battle_controller.render(battle)
 
     def show_all_manoeuvre_actions(self, cards_a, cards_b):
         troop_attacking, troop_defending = self.parse_input(cards_a, cards_b)
         iterator = CombinedManoeuvreIterator(troop_attacking, troop_defending)
+        battle_controller = BattleController()
         for offensive, defensive in iterator:
-            print(offensive)
-            print(defensive)
+            battle = Battle(offensive, defensive)
+            battle_controller.render(battle)
             input("hit enter")
 
     def loop_strategies(self, cards_a, cards_b):

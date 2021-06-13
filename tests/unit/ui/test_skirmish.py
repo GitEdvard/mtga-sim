@@ -1,6 +1,6 @@
 from mtga_sim.manoeuvres.manoeuvre import Manoeuvre
 from mtga_sim.skirmish import Skirmish
-from mtga_sim.ui.skirmish_view import SkirmishView
+from mtga_sim.ui.skirmish_model import SkirmishModel
 from tests.unit.test_base import TestBase
 
 
@@ -18,7 +18,7 @@ class TestSkirmishes(TestBase):
         skirmish = self._create_skirmish_defend_first()
 
         # Act
-        skirmish_view = SkirmishView(skirmish, padding_str="+")
+        skirmish_view = SkirmishModel(skirmish, padding_str="+")
 
         # Assert
         assert skirmish_view.width == 7
@@ -28,7 +28,7 @@ class TestSkirmishes(TestBase):
         skirmish = self._create_skirmish_defend_first()
 
         # Act
-        skirmish_view = SkirmishView(skirmish, padding_str="+")
+        skirmish_view = SkirmishModel(skirmish, padding_str="+")
 
         # Assert
         assert skirmish_view.defender_string == "2/2 2/2"
@@ -38,7 +38,7 @@ class TestSkirmishes(TestBase):
         skirmish = self._create_skirmish_defend_first()
 
         # Act
-        skirmish_view = SkirmishView(skirmish, padding_str="+")
+        skirmish_view = SkirmishModel(skirmish, padding_str="+")
 
         # Assert
         assert skirmish_view.attacker_string == "2/2++++"
@@ -48,8 +48,8 @@ class TestSkirmishes(TestBase):
         skirmish = self._create_skirmish_defend_first()
 
         # Act
-        skirmish_view = SkirmishView(skirmish, padding_str="+")
+        skirmish_view = SkirmishModel(skirmish, padding_str="+")
 
         # Assert
-        assert skirmish_view.attack_arrows_string == "{}++++++".format(SkirmishView.UPWARD_ARROW)
+        assert skirmish_view.attack_arrows_string == "{}++++++".format(SkirmishModel.UPWARD_ARROW)
 
