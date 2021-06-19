@@ -23,7 +23,7 @@ class TestBattle(TestBase):
         battle_model = BattleModel(battle, padding_str="+")
 
         # Assert
-        assert battle_model.defend_string == '2/2 2/2++++'
+        assert battle_model.defend_string == '2/2 2/2+++++++'
 
     def test_attack_string_for_two_skirmishes(self):
         battle = self._create_battle()
@@ -32,7 +32,7 @@ class TestBattle(TestBase):
         battle_model = BattleModel(battle, padding_str="+")
 
         # Assert
-        assert battle_model.attack_string == '2/2+++++2/2'
+        assert battle_model.attack_string == '2/2++++++2/2++'
 
     def test_attack_arrow_string_for_two_skirmishes(self):
         battle = self._create_battle()
@@ -41,7 +41,7 @@ class TestBattle(TestBase):
         battle_model = BattleModel(battle, padding_str="+")
 
         # Assert
-        expected = '{}+++++++{}++'.format(SkirmishModel.UPWARD_ARROW, SkirmishModel.UPWARD_ARROW)
+        expected = '{}++++++++{}++'.format(SkirmishModel.UPWARD_ARROW, SkirmishModel.UPWARD_ARROW)
         assert battle_model.attack_arrows_string == expected
 
     def _create_battle_with_passives_and_actives(self):
@@ -62,6 +62,6 @@ class TestBattle(TestBase):
         battle_model = BattleModel(battle, padding_str="+")
 
         # Assert
-        assert battle_model.defend_string == "2/2+2/2"
+        assert battle_model.defend_string == "2/2++2/2"
         assert battle_model.attack_arrows_string == "{}++".format(SkirmishModel.UPWARD_ARROW)
-        assert battle_model.attack_string == "1/2+1/1"
+        assert battle_model.attack_string == "1/2++1/1"

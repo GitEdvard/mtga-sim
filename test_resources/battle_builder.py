@@ -13,7 +13,7 @@ class BattleBuilder(object):
     def with_attacking(self, creature_repr):
         creature = self._parse_creature_string(creature_repr)
         self.attackers.append(
-            AttackAction.instantiate(Attack.action_index(), creature)
+            Attack(creature)
         )
         return self
 
