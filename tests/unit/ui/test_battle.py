@@ -23,7 +23,7 @@ class TestBattle(TestBase):
         battle_model = BattleModel(battle, padding_str="+")
 
         # Assert
-        assert battle_model.defend_string == '2/2 2/2+++++++'
+        assert battle_model.defend_string == '2/2 2/2+++++++++'
 
     def test_attack_string_for_two_skirmishes(self):
         battle = self._create_battle()
@@ -32,7 +32,7 @@ class TestBattle(TestBase):
         battle_model = BattleModel(battle, padding_str="+")
 
         # Assert
-        assert battle_model.attack_string == '2/2++++++2/2++'
+        assert battle_model.attack_string == '2/2++++++2/2++++'
 
     def test_attack_arrow_string_for_two_skirmishes(self):
         battle = self._create_battle()
@@ -53,7 +53,6 @@ class TestBattle(TestBase):
         battle = battle_builder.build()
         return battle
 
-    @pytest.mark.now
     def test_all_string_with_both_attackers_and_passives(self):
         # Arrange
         battle = self._create_battle_with_passives_and_actives()
@@ -62,6 +61,22 @@ class TestBattle(TestBase):
         battle_model = BattleModel(battle, padding_str="+")
 
         # Assert
-        assert battle_model.defend_string == "2/2++2/2"
+        assert battle_model.defend_string == "2/2++++2/2"
         assert battle_model.attack_arrows_string == "{}++".format(SkirmishModel.UPWARD_ARROW)
-        assert battle_model.attack_string == "1/2++1/1"
+        assert battle_model.attack_string == "1/2++++1/1"
+
+    @pytest.mark.now
+    def test_all_strings__only_passives(self):
+        # Arrange
+        battle_builder = BattleBuilder()
+        battle_builder.with_passive_offensive("1/1")
+        battle_builder.with_passive_defending("1/1")
+        battle = battle_builder.build()
+
+        # Act
+        battle_model = BattleModel(battle, padding_str="+")
+
+        # Assert
+        assert battle_model.defend_string == "++++1/1"
+        assert battle_model.attack_arrows_string == ""
+        assert battle_model.attack_string == "++++1/1"
