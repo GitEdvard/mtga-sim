@@ -6,7 +6,6 @@ class BattleModel(object):
     SKIRMISH_MARGIN_LENGTH = 1
 
     def __init__(self, battle, padding_str=None):
-        self.battle = battle
         if not padding_str:
             padding_str = " "
         self.padding_str = padding_str
