@@ -13,6 +13,16 @@ class Battle:
         self.offensive_manoeuvre = offensive_manoeuvre
         self.defensive_manoeuvre = defensive_manoeuvre
         self.skirmishes = None
+        self.offensive_passives = None
+        self.defensive_passives = None
+
+    def build(self):
+        self.create_passives()
+        self.create_skirmishes()
+
+    def create_passives(self):
+        self.offensive_passives = [a for a in self.offensive_manoeuvre if not a.is_active()]
+        self.defensive_passives = [d for d in self.defensive_manoeuvre if not d.is_active()]
 
     def create_skirmishes(self):
         # Group by attacking creature

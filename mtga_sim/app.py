@@ -27,7 +27,7 @@ class App(object):
         iter(iterator)
         attack, defend = next(iterator)
         battle = Battle(attack, defend)
-        battle.create_skirmishes()
+        battle.build()
         battle_controller = BattleController()
         battle_controller.render(battle)
 
@@ -37,7 +37,7 @@ class App(object):
         battle_controller = BattleController()
         for offensive, defensive in iterator:
             battle = Battle(offensive, defensive)
-            battle.create_skirmishes()
+            battle.build()
             battle_controller.render(battle)
             input("hit enter")
 

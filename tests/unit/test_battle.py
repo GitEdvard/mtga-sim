@@ -49,3 +49,15 @@ class TestBattle(TestBase):
 
         # Assert
         assert len(battle.skirmishes) == 0
+
+    @pytest.mark.now
+    def test_1_passive_against_1_passive__1_passive_on_both_sides(self):
+        # Arrange
+        battle = self._create_passive_battle(1)
+
+        # Act
+        battle.create_passives()
+
+        # Assert
+        assert len(battle.offensive_passives) == 1
+        assert len(battle.defensive_passives) == 1
