@@ -20,6 +20,11 @@ class Troop(object):
         self.creatures = creatures or list()
         self.counter = None
 
+    @property
+    def power(self):
+        # TODO: This should reflect each creature's current state!
+        return sum(c.power for c in self.creatures)
+
     def append(self, card):
         self.creatures.append(card)
 

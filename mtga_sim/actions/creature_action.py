@@ -10,6 +10,11 @@ class CreatureAction(abc.ABC):
         self.power = creature.power
         self.toughness = creature.toughness
 
+    def reduce_damage(self, force):
+        residue = max(0, force - self.toughness)
+        self.toughness = max(0, self.toughness - force)
+        return residue
+
     @classmethod
     @abc.abstractmethod
     def action_index(cls):
