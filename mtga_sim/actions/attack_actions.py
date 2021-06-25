@@ -1,8 +1,8 @@
 from abc import abstractmethod
-from mtga_sim.actions.action import Action
+from mtga_sim.actions.creature_action import CreatureAction
 
 
-class AttackAction(Action):
+class AttackAction(CreatureAction):
     @classmethod
     def number_actions(cls):
         classes = cls.get_subclasses()

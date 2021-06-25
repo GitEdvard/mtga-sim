@@ -1,35 +1,28 @@
 import abc
 import sys
 import inspect
-import uuid
 
 
-class Action(abc.ABC):
+class CreatureAction(abc.ABC):
     def __init__(self, creature):
         self.creature = creature
         self.legal = False
-        self.id = uuid.uuid4()
+        self.power = creature.power
+        self.toughness = creature.toughness
 
     @classmethod
     @abc.abstractmethod
     def action_index(cls):
         pass
 
-    def __hash__(self):
-        return hash(self.id)
+    @property
+    def id(self):
+        return self.creature.id
 
     @staticmethod
     @abc.abstractmethod
     def is_active():
         pass
-
-    @property
-    def power(self):
-        return self.creature.power
-
-    @property
-    def toughness(self):
-        return self.creature.toughness
 
     @classmethod
     @abc.abstractmethod

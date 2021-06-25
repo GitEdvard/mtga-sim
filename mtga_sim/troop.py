@@ -1,8 +1,15 @@
+import uuid
+
+
 class Creature(object):
 
     def __init__(self, power, toughness):
         self.power = power
         self.toughness = toughness
+        self.id = uuid.uuid4()
+
+    def __hash__(self):
+        return hash(self.id)
 
     def __str__(self):
         return "{}/{}".format(self.power, self.toughness)
